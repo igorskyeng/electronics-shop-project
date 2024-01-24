@@ -1,1 +1,25 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+from src.item import Item
+
+test_name = "Смартфон"
+test_price = 10000
+test_quantity = 20
+
+Item.pay_rate = 0.5
+
+item = Item(test_name, test_price, test_quantity)
+
+
+def test_item__init__():
+    assert item.name == test_name
+    assert item.price == test_price
+    assert item.quantity == test_quantity
+
+
+def test_calculate_total_price():
+    assert item.calculate_total_price() == 200000
+
+
+def test_apply_discount():
+    item.apply_discount()
+    assert item.price == 5000
