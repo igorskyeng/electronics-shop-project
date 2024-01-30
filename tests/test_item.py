@@ -23,3 +23,17 @@ def test_calculate_total_price():
 def test_apply_discount():
     item.apply_discount()
     assert item.price == 5000
+
+
+def test_string_to_number():
+    assert Item.string_to_number('10') == 10
+    assert Item.string_to_number('10.0') == 10
+    assert Item.string_to_number('101.15') == 101
+
+
+def test_name_setter():
+    item.name = '0123456789'
+    assert item.name == '0123456789'
+    item.name = '0123456789a'
+    assert item.name != '0123456789a'
+
