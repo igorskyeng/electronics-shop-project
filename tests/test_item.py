@@ -37,3 +37,12 @@ def test_name_setter():
     item.name = '0123456789a'
     assert item.name != '0123456789a'
 
+
+def test_repr():
+    item1 = Item("Планшет", 15000, 1)
+    assert repr(item1) == "Item('Планшет', 15000, 1)"
+
+
+def test_str():
+    item1 = Item("Планшет", 10000, 20)
+    assert str(item1) == 'Планшет'
