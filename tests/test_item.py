@@ -46,3 +46,10 @@ def test_repr():
 def test_str():
     item1 = Item("Планшет", 10000, 20)
     assert str(item1) == 'Планшет'
+
+
+def test_item__add__():
+    item1 = Item("Смартфон", 10000, 10)
+    item2 = Item("Планшет", 10000, 20)
+    assert item1 + item2 == 30
+    assert item2 + item2 == 40
