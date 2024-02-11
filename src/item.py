@@ -46,19 +46,26 @@ class Item:
         return self.quantity + other.quantity
 
     @classmethod
-    def instantiate_from_csv(cls, path):
+    def instantiate_from_csv(cls, path='items.csv'):
         """
         Класс-метод, инициализирующий экземпляры класса 'Item' данными из файла 'src/items.csv.
         """
         Item.all = []
-        path = os.path.join(os.path.dirname(__file__), 'items.csv')
-        with open(path, 'r', newline='\n', encoding='windows- 1251') as file:
-            reader = csv.DictReader(file)
-            lines = list(reader)
-            for line in lines:
-                print(cls(name=line.get('name'),
-                          price=line.get('price'),
-                          quantity=line.get('quantity')))
+
+        try:
+            path = os.path.join(os.path.dirname(__file__), path)
+
+            with open(path, 'r', newline='\n', encoding='windows- 1251') as file:
+                reader = csv.DictReader(file)
+
+                for line in reader:
+                    return cls(name=line['name'], price=float(line['price']), quantity=int(line['quantity']))
+
+        except KeyError:
+            raise InstantiateCSVError()
+
+        except FileNotFoundError:
+            raise FileNotFoundError("Нет такого файла")
 
     @staticmethod
     def string_to_number(name):
@@ -76,3 +83,12 @@ class Item:
             print('Длина наименования товара превышает 10 символов')
         else:
             self.__name = name
+
+
+class InstantiateCSVError(Exception):
+    """Класс выводит сообщение пользователю при исключении ошибки 'KeyError'"""
+    def __init__(self, *args, **kwargs):
+        self.message = 'Файл item.csv поврежден'
+
+    def __str__(self):
+        return self.message
